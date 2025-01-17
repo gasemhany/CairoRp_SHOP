@@ -17,8 +17,15 @@
             <img src="logocairo.png" alt="" width="70px">
         </div>
         <nav>
+        </ul>
             <ul class="nav-links">
-                <li><a href="cart.html"><i class='bx bx-cart'><span data-cart="1">0</span></i></a></li>
+                <li>
+                    <i class='bx bx-cart'><span id="cart-count">0</span></i>
+                    <div id="cart-dropdown" class="hidden">
+                        <ul id="cart-items"></ul>
+                    </div>
+                </li>
+                
                 <li><a href="https://discord.gg/h7TZyjcs"><i class='bx bxl-discord-alt'></i></a></li> 
                 <li data-target="products" >Vehicles</li>
                 <li data-target="products2" >MemberShips</li>

@@ -44,5 +44,77 @@ function sendProducts() {
         }, index * 300); // تأخير كل منتج بمقدار 300 ملي ثانية
     });
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const cart = [];
+    const cartCount = document.getElementById("cart-count");
+    const cartItems = document.getElementById("cart-items");
+    const cartDropdown = document.getElementById("cart-dropdown");
+
+    // Add to cart functionality
+    document.querySelectorAll(".product .btn").forEach((button) => {
+        button.addEventListener("click", (event) => {
+            const product = event.target.closest(".product");
+            const productName = product.querySelector("h3").textContent;
+            const productPrice = product.getAttribute("data-price");
+            const quantity = product.querySelector(".quantity").value;
+
+            // Add product to cart array
+            cart.push({
+                name: productName,
+                price: productPrice,
+                quantity: quantity,
+            });
+
+            // Update cart count
+            cartCount.textContent = cart.length;
+
+            // Show a message (optional)
+            alert(`${productName} added to cart!`);
+        });
+    });
+
+    // Toggle cart dropdown on click
+    const cartIcon = document.querySelector(".bx-cart");
+    let isDropdownOpen = false;
+
+    cartIcon.addEventListener("click", () => {
+        isDropdownOpen = !isDropdownOpen;  // Toggle the dropdown open/close
+        if (isDropdownOpen) {
+            updateCartDisplay();
+            cartDropdown.style.display = "block";
+        } else {
+            cartDropdown.style.display = "none";
+        }
+    });
+
+    // Keep the dropdown open when mouse enters the cart icon
+    cartIcon.addEventListener("mouseenter", () => {
+        if (isDropdownOpen) {
+            cartDropdown.style.display = "block";
+        }
+    });
+
+    // Hide dropdown on mouse leave only if it is not opened by click
+    cartIcon.addEventListener("mouseleave", () => {
+        if (!isDropdownOpen) {
+            cartDropdown.style.display = "none";
+        }
+    });
+
+    // Update cart items display
+    function updateCartDisplay() {
+        cartItems.innerHTML = ""; // Clear the list
+        if (cart.length === 0) {
+            cartItems.innerHTML = "<li>Your cart is empty!</li>";
+        } else {
+            cart.forEach((item) => {
+                const li = document.createElement("li");
+                li.textContent = `${item.quantity} x ${item.name} - $${item.price}`;
+                cartItems.appendChild(li);
+            });
+        }
+    }
+});
+
 
 
